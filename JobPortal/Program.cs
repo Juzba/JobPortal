@@ -10,8 +10,42 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredUniqueChars = 0;
+})
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI();
+
+builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+{
+    options.ValidationInterval = TimeSpan.FromSeconds(10);
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.SlidingExpiration = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+});
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("JobSeekerPolicy", p => p.RequireRole("JobSeeker"))
+    .AddPolicy("EmployerPolicy", p => p.RequireRole("Employer"))
+    .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"));
+
+
+
+
+
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

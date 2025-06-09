@@ -1,0 +1,42 @@
+﻿@model JobPortal.Models.Job
+
+@{
+    ViewData["Title"] = "AddJob";
+}
+
+<h1>Přidat inzerát</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddJob">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+                <input type="hidden" asp-for="EmployerId" class ="form-control">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Vytvořit" class="btn btn-info my-4" />
+                <a class="btn btn-outline-info ms-2" asp-controller="Home" asp-action="JobList">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
