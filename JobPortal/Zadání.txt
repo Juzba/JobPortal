@@ -1,0 +1,23 @@
+Projekt: Inzerce a vyhledávání pracovních nabídek
+Struktura a technologie:
+Hlavní tabulky (Entity Framework):
+
+Users (Id, Email, PasswordHash, Role, EmailConfirmed)
+Roles (Id, Name — např. JobSeeker, Employer, Admin)
+JobListings (Id, EmployerId (FK - User), Title, Description, Location, Salary, DatePosted)
+Applications (Id, JobListingId (FK), ApplicantId (FK - User), CVPath, Status)
+EmailConfirmationTokens (Id, UserId, Token, Expiration)
+Autorizace a role-based přístup:
+
+Zaměstnavatelé mohou přidávat, upravovat a mazat pracovní nabídky.
+Uchazeči se mohou registrovat, hledat nabídky a podávat žádosti.
+Admin má plný přístup ke správě uživatelů a inzerátů.
+Ověření emailu:
+
+Při registraci se uživatelům pošle ověřovací email.
+Bez potvrzeného emailu není přístup k podávání žádostí nebo publikování nabídek.
+Další rozšíření:
+
+Systém upozornění (e-mailem) na nové nabídky.
+Filtrování pracovních nabídek podle lokace, platových rozpětí, typu práce.
+Profil uživatele s historií podaných žádostí nebo nabídek.
