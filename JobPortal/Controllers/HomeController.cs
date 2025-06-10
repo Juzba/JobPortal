@@ -8,37 +8,39 @@ using System.Diagnostics;
 
 namespace JobPortal.Controllers
 {
-    public class HomeController(ILogger<HomeController> logger, ApplicationDbContext db) : Controller
+    public class HomeController(ILogger<HomeController> logger, ApplicationDbContext db, RoleManager<IdentityRole> roleManager) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
         private readonly ApplicationDbContext _db = db;
+        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
 
         public IActionResult Index() => View();
         public async Task<IActionResult> Detail(int id) => View(await _db.Jobs.FindAsync(id));
 
         public async Task<IActionResult> JobList() => View(await _db.Jobs.ToListAsync());
 
-        [Authorize]
+      
         public IActionResult Buttons() => View();
 
-        [Authorize]
+       
         [HttpPost]
         public async Task<IActionResult> Buttons(int number)
         {
             Console.WriteLine("Cislo je:" + number);
-            if (number == 1 && await _db.Users.FirstOrDefaultAsync(p => p.Email == "Katka@gmail.com") == null)
+            if (number == 1)
             {
+                var hasher = new PasswordHasher<IdentityUser>();
+                var user = new IdentityUser();
+                string hashed = hasher.HashPassword(user, "123456");
+                Console.WriteLine(hashed);
+            }
 
-                await _db.Users.AddAsync(new IdentityUser()
-                {
-                    Email = "Katka@gmail.com",
-                    UserName = "Katka",
-                    PasswordHash = "123456",
-                    EmailConfirmed = true
-                });
-                await _db.SaveChangesAsync();
+            if (number == 2)
+            {
+                var adminRoleName = "admin";
 
-                Console.WriteLine("Pridán uživatel Katka");
+                await _roleManager.CreateAsync(new IdentityRole(adminRoleName));
+
             }
 
             return View();
