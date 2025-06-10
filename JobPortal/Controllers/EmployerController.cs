@@ -4,16 +4,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using JobPortal.Code;
 
 namespace JobPortal.Controllers
 {
     [Authorize]
-    public class EmployerController(ApplicationDbContext db, UserManager<IdentityUser> userManager) : Controller
+    public class EmployerController(ApplicationDbContext db, UserManager<IdentityUser> userManager, Components components) : Controller
     {
         private readonly ApplicationDbContext _db = db;
         private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly Components _components = components;
 
-        public IActionResult AddJob() => View(new Job());
+        public IActionResult AddJob() => View(_components.RandomJob());
 
 
         [HttpPost]

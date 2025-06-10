@@ -1,10 +1,49 @@
-﻿@{
-	ViewData["Title"] = "Seznam inzerátů";
+﻿@model IList<JobPortal.Models.Job>
+
+@{
+    ViewData["Title"] = "JobList";
 }
 
 
 <div>
-<h1>Pracovní příležitosti.</h1>
+
+    <h1 class="my-4 text-info text-center fw-bolder" >JobList</h1>
+
+    <table style="max-width: 800px" class="table table-dark table-bordered mx-auto">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a style="text-decoration: none" asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id">
+                            <table id="table" class="table table-borderless table-active">
+                               <tr>
+                                   <td style="width: 50%; font-weight:900"> @item.Title</td>
+                                   <td style="width: 50%">@item.Company</td>
+                               </tr>
+                               <tr>
+                                   <td>@item.Location</td>
+                                   <td>@Html.DisplayFor(prop => item.Salary)</td>
+                               </tr>
+                               <tr>
+                                   <td>@Html.DisplayFor(prop=> item.DatePosted)</td>
+                                   <td></td>
+                               </tr>
+                            </table>
+                        </a>
+                    </td>
+                </tr>
+             }
+    </table>
+
+
+
+
+
+
+
+
+
+
 
 
 

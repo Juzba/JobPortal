@@ -13,6 +13,9 @@ namespace JobPortal.Models
         [Required(ErrorMessage = "Zadej název.")]
         [StringLength(40, ErrorMessage ="Maximálně 40 znaků.")]
         public string Title { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Zadej firmu.")]
+        [StringLength(40, ErrorMessage = "Maximálně 40 znaků.")]
+        public string Company { get; set; } = string.Empty;
         [Required(ErrorMessage = "Zadej popis.")]
         [StringLength(100, ErrorMessage = "Maximálně 100 znaků.")]
         public string Description { get; set; } = string.Empty;
@@ -21,7 +24,9 @@ namespace JobPortal.Models
         public string Location { get; set; } = string.Empty;
         [Required(ErrorMessage = "Zadej mzdu.")]
         [Range(5000, 500000, ErrorMessage = "V rozsahu 5000 - 500 000Kč")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public int Salary { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime DatePosted { get; set; } = DateTime.Now;
     }
 }
