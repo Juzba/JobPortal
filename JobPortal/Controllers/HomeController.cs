@@ -16,8 +16,14 @@ namespace JobPortal.Controllers
 
         public async Task<IActionResult> JobList() => View(await _db.Jobs.ToListAsync());
 
-        public IActionResult Buttons()
+        public IActionResult Buttons() => View();
+
+        [HttpPost]
+        public IActionResult Buttons(int number)
         {
+            Console.WriteLine("Cislo je:" + number);
+
+
             return View();
         }
 
