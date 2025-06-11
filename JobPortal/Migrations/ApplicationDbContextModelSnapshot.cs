@@ -124,6 +124,26 @@ namespace JobPortal.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "admin-role-id",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "jobseeker-role-id",
+                            Name = "JobSeeker",
+                            NormalizedName = "JOBSEEKER"
+                        },
+                        new
+                        {
+                            Id = "user-role-id",
+                            Name = "Employer",
+                            NormalizedName = "EMPLOYER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

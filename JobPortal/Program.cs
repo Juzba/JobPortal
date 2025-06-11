@@ -1,7 +1,7 @@
+using JobPortal.Code;
 using JobPortal.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using JobPortal.Code;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddTransient<Components>();
-
+builder.Services.AddTransient<Seed>();
 
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -27,22 +27,21 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 
-builder.Services.Configure<SecurityStampValidatorOptions>(options =>
-{
-    options.ValidationInterval = TimeSpan.FromSeconds(10);
-});
+//builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+//{
+//    options.ValidationInterval = TimeSpan.FromSeconds(10);
+//});
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.SlidingExpiration = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-});
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.SlidingExpiration = true;
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+//});
 
-builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("JobSeekerPolicy", p => p.RequireRole("JobSeeker"))
-    .AddPolicy("EmployerPolicy", p => p.RequireRole("Employer"))
-    .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"));
-
+//builder.Services.AddAuthorizationBuilder()
+//    .AddPolicy("JobSeekerPolicy", p => p.RequireRole("JobSeeker"))
+//    .AddPolicy("EmployerPolicy", p => p.RequireRole("Employer"))
+//    .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"));
 
 
 
@@ -79,5 +78,20 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+
+
+
+
+// Seed the database with initial data
+using (var scope = app.Services.CreateScope())
+{
+    var seed = scope.ServiceProvider.GetRequiredService<Seed>();
+    await seed.InitializeUsersAsync();
+}
+
+
+
+
 
 app.Run();

@@ -27,6 +27,6 @@ namespace JobPortal.Models
         [DisplayFormat(DataFormatString = "{0:C}")]
         public int Salary { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
-        public DateTime DatePosted { get; set; } = DateTime.Now;
+        public DateTime DatePosted { get; set; }
     }
 }

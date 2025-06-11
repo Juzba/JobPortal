@@ -24,6 +24,7 @@ namespace JobPortal.Controllers
             var user = await _db.Users.FirstOrDefaultAsync(p => p.Email == User.Identity!.Name);
             if (user != null) {
                 job.Employer = user;
+                job.DatePosted = DateTime.Now;
                 ModelState.Clear();
             };
             

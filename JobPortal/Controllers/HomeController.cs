@@ -29,10 +29,21 @@ namespace JobPortal.Controllers
             Console.WriteLine("Cislo je:" + number);
             if (number == 1)
             {
+                var user = new IdentityUser
+                {
+                    Id = "user1-id",
+                    UserName = "Juzba",
+                    NormalizedUserName = "JUZBA",
+                    Email = "Juzba88@gmail.com",
+                    NormalizedEmail = "JUZBA88@GMAIL.COM",
+                    EmailConfirmed = true,
+                    SecurityStamp = "static-security-stamp-1",
+                    ConcurrencyStamp = "static-concurrency-stamp-1"
+                };
+
                 var hasher = new PasswordHasher<IdentityUser>();
-                var user = new IdentityUser();
-                string hashed = hasher.HashPassword(user, "123456");
-                Console.WriteLine(hashed);
+                user.PasswordHash = hasher.HashPassword(user, "123456");
+                Console.WriteLine(user.PasswordHash);
             }
 
             if (number == 2)
