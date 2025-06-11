@@ -38,6 +38,25 @@ namespace JobPortal.Data
                 }
             );
 
+            builder.Entity<IdentityUser>().HasData(new IdentityUser
+            {
+                Id = "user1-id-2478652fdsss154",
+                UserName = "Juzba88@gmail.com",
+                NormalizedUserName = "JUZBA88@GMAIL.COM",
+                Email = "Juzba88@gmail.com",
+                NormalizedEmail = "JUZBA88@GMAIL.COM",
+                EmailConfirmed = true,
+                SecurityStamp = "security-stamp-1-14fds-fsd14dsf-dsfsdf5",
+                PasswordHash = "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==",
+                ConcurrencyStamp = "concurency-stamp-1-112dsd-fsdsffsf-1444",
+            });
+
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                UserId = "user1-id-2478652fdsss154",
+                RoleId = "admin-role-id"
+            });
+
             builder.Entity<Job>()
                 .Property(j => j.Salary)
                 .HasColumnType("decimal(18, 2)");

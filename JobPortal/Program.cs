@@ -12,7 +12,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddTransient<Components>();
-builder.Services.AddTransient<Seed>();
 
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -78,20 +77,5 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
-
-
-
-
-
-// Seed the database with initial data
-using (var scope = app.Services.CreateScope())
-{
-    var seed = scope.ServiceProvider.GetRequiredService<Seed>();
-    await seed.InitializeUsersAsync();
-}
-
-
-
-
 
 app.Run();

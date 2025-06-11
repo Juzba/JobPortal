@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JobPortal.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitialCreate2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -220,6 +220,16 @@ namespace JobPortal.Migrations
                     { "jobseeker-role-id", null, "JobSeeker", "JOBSEEKER" },
                     { "user-role-id", null, "Employer", "EMPLOYER" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "user1-id-2478652fdsss154", 0, "concurency-stamp-1-112dsd-fsdsffsf-1444", "Juzba88@gmail.com", true, false, null, "JUZBA88@GMAIL.COM", "JUZBA88@GMAIL.COM", "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==", null, false, "security-stamp-1-14fds-fsd14dsf-dsfsdf5", false, "Juzba88@gmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "admin-role-id", "user1-id-2478652fdsss154" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_AplicantId",

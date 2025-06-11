@@ -31,14 +31,14 @@ namespace JobPortal.Controllers
             {
                 var user = new IdentityUser
                 {
-                    Id = "user1-id",
-                    UserName = "Juzba",
-                    NormalizedUserName = "JUZBA",
+                    Id = "user1-id-2478652fdsss154",
+                    UserName = "Juzba88@gmail.com",
+                    NormalizedUserName = "JUZBA88@GMAIL.COM",
                     Email = "Juzba88@gmail.com",
                     NormalizedEmail = "JUZBA88@GMAIL.COM",
                     EmailConfirmed = true,
-                    SecurityStamp = "static-security-stamp-1",
-                    ConcurrencyStamp = "static-concurrency-stamp-1"
+                    SecurityStamp = "security-stamp-1-14fds-fsd14dsf-dsfsdf5",
+                    ConcurrencyStamp = "concurency-stamp-1-112dsd-fsdsffsf-1444",
                 };
 
                 var hasher = new PasswordHasher<IdentityUser>();

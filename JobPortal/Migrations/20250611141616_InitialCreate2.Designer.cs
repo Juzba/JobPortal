@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250611021912_Init")]
-    partial class Init
+    [Migration("20250611141616_InitialCreate2")]
+    partial class InitialCreate2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -237,6 +237,24 @@ namespace JobPortal.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "user1-id-2478652fdsss154",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "concurency-stamp-1-112dsd-fsdsffsf-1444",
+                            Email = "Juzba88@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JUZBA88@GMAIL.COM",
+                            NormalizedUserName = "JUZBA88@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "security-stamp-1-14fds-fsd14dsf-dsfsdf5",
+                            TwoFactorEnabled = false,
+                            UserName = "Juzba88@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -299,6 +317,13 @@ namespace JobPortal.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "user1-id-2478652fdsss154",
+                            RoleId = "admin-role-id"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
