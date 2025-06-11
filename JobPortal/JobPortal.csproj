@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Employer\Data\" />
+    <Folder Include="Areas\Employer\Models\" />
     <Folder Include="Views\JobSeeker\" />
   </ItemGroup>
 
