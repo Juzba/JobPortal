@@ -19,6 +19,7 @@
 				<td>Ban ends</td>
 			</tr>
 		</thead>
+		
 		@foreach (var user in Model)
 		{
 			<tr>
@@ -27,11 +28,12 @@
 				<td>@user.IsEmailConfirmed</td>
 				<td>@user.PhoneNumber</td>
 				<td>
-					@using (Html.BeginForm("AdminPage", "Home", FormMethod.Post))
-					{
-						<button class="btn @(user.Roles?.Contains("Admin") == true ? "btn-danger" : "btn-outline-light")" value="1">Admin</button>
-						<button class="btn @(user.Roles?.Contains("Employer") == true ? "btn-danger" : "btn-outline-light") " value="2">Employer</button>
-					}
+					<form asp-controller="Home" asp-action="AdminPage" method="post"> 
+						<input type="hidden" name="userName" value="@user.UserName" />
+						<button class="btn @(user.Roles?.Contains("Admin") == true ? "btn-danger" : "btn-outline-light")" type="submit" name="role" value="Admin">Admin</button>
+						<button class="btn @(user.Roles?.Contains("Employer") == true ? "btn-danger" : "btn-outline-light")" type="submit" name="role" value="Employer">Employer</button>
+					</form>
+					
 				</td>
 				<td>@user.Ban</td>
 				<td>@user.BanEnds</td>

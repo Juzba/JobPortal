@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\JobSeeker\**" />
+    <Content Remove="Views\JobSeeker\**" />
+    <EmbeddedResource Remove="Views\JobSeeker\**" />
+    <None Remove="Views\JobSeeker\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Zadání.txt" />
   </ItemGroup>
 
@@ -29,7 +36,6 @@
   <ItemGroup>
     <Folder Include="Areas\Employer\Data\" />
     <Folder Include="Areas\Employer\Models\" />
-    <Folder Include="Views\JobSeeker\" />
   </ItemGroup>
 
 </Project>

@@ -48,10 +48,22 @@ namespace JobPortal.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdminPage(int cislo)
+        public async Task<IActionResult> AdminPage(string role, string userName)
         {
-            Console.WriteLine("cus");
-            return View(userList);
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null || role == null) return View(userList);
+
+            if (await _userManager.IsInRoleAsync(user, role)) 
+            {
+                if (role == "Admin" && userList.Where(p => p.Roles?.Contains("Admin") == true).Count() == 1) return View(userList);
+                await _userManager.RemoveFromRoleAsync(user, role);
+            }
+
+            else
+                await _userManager.AddToRoleAsync(user, role);
+
+            return RedirectToAction("AdminPage", "Home");
         }
 
 
