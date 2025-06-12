@@ -10,14 +10,14 @@ namespace JobPortal.Areas.Admin.Controllers
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     [Route("[area]/[controller]/{id?}")]
-    public class HomeController(ApplicationDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) : Controller
+    public class HomeController(ApplicationDbContext db, UserManager<IdentityUser> userManager) : Controller
     {
         private readonly ApplicationDbContext _db = db;
         private readonly UserManager<IdentityUser> _userManager = userManager;
-        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+        static List<UserModel> userList = [];
+
         public async Task<IActionResult> AdminPage()
         {
-            List<UserModel> userList = [];
             string[] roles = ["Admin", "Employer"];
 
             userList = await _userManager.Users.Select(p => new UserModel()
@@ -29,30 +29,32 @@ namespace JobPortal.Areas.Admin.Controllers
             }).ToListAsync();
 
 
-
             foreach (var role in roles)
             {
                 var usersInRole = await _userManager.GetUsersInRoleAsync(role);
 
-                foreach (var userInRole in usersInRole)
+                userList = userList.Select(p =>
                 {
-                 var userMatch =  userList.FirstOrDefault(p => p.UserName == userInRole.UserName);
-                    if (userMatch != null)
+                    p.Roles ??= [];
+                    if (usersInRole.Any(u => u.UserName == p.UserName))
                     {
-                        userMatch.Roles ??= [];
-                        userMatch.Roles.Add(role);
+                        p.Roles.Add(role);
                     }
-                }
+                    return p;
+                }).ToList();
             }
-
-
-
-
-
-
-
 
             return View(userList);
         }
+
+        [HttpPost]
+        public IActionResult AdminPage(int cislo)
+        {
+            Console.WriteLine("cus");
+            return View(userList);
+        }
+
+
+
     }
 }
