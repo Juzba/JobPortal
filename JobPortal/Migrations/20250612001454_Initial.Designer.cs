@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250611141616_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20250612001454_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,7 +143,7 @@ namespace JobPortal.Migrations
                         },
                         new
                         {
-                            Id = "user-role-id",
+                            Id = "employer-role-id",
                             Name = "Employer",
                             NormalizedName = "EMPLOYER"
                         });
@@ -241,7 +241,7 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "user1-id-2478652fdsss154",
+                            Id = "juzba1-id-2478652fdsss154",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "concurency-stamp-1-112dsd-fsdsffsf-1444",
                             Email = "Juzba88@gmail.com",
@@ -254,6 +254,38 @@ namespace JobPortal.Migrations
                             SecurityStamp = "security-stamp-1-14fds-fsd14dsf-dsfsdf5",
                             TwoFactorEnabled = false,
                             UserName = "Juzba88@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "katka2-id-12112122fdsss178",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "concurency-stamp-2-112dsd-fssfdnmjsf-5866",
+                            Email = "Katka@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "KATKA@GMAIL.COM",
+                            NormalizedUserName = "KATKA@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMpUq/G6FCHFYqBZnihzdsiHRhqrKsi6XzZQrOuBPZTKKCRYtiSzTxKxMPQe/GFbAg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "security-stamp-2-14fds-fsd14dsf-242424242",
+                            TwoFactorEnabled = false,
+                            UserName = "Katka@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "karel3-id-4242422fdsss145",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "concurency-stamp-3-11kjkj-fsdsffsf-17855",
+                            Email = "Karel@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "KAREL@GMAIL.COM",
+                            NormalizedUserName = "KAREL@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKEAkQQa9R8U6qeYMzJ+wta1OH8ucPabTfW1aJSWYnQo/b/nWsQlVLQDVESflgvbJw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "security-stamp-3-14fds-kjkhkdsf-dsfsd545",
+                            TwoFactorEnabled = false,
+                            UserName = "Karel@gmail.com"
                         });
                 });
 
@@ -321,8 +353,13 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "user1-id-2478652fdsss154",
+                            UserId = "juzba1-id-2478652fdsss154",
                             RoleId = "admin-role-id"
+                        },
+                        new
+                        {
+                            UserId = "katka2-id-12112122fdsss178",
+                            RoleId = "employer-role-id"
                         });
                 });
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JobPortal.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate2 : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -217,19 +217,28 @@ namespace JobPortal.Migrations
                 values: new object[,]
                 {
                     { "admin-role-id", null, "Admin", "ADMIN" },
-                    { "jobseeker-role-id", null, "JobSeeker", "JOBSEEKER" },
-                    { "user-role-id", null, "Employer", "EMPLOYER" }
+                    { "employer-role-id", null, "Employer", "EMPLOYER" },
+                    { "jobseeker-role-id", null, "JobSeeker", "JOBSEEKER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "user1-id-2478652fdsss154", 0, "concurency-stamp-1-112dsd-fsdsffsf-1444", "Juzba88@gmail.com", true, false, null, "JUZBA88@GMAIL.COM", "JUZBA88@GMAIL.COM", "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==", null, false, "security-stamp-1-14fds-fsd14dsf-dsfsdf5", false, "Juzba88@gmail.com" });
+                values: new object[,]
+                {
+                    { "juzba1-id-2478652fdsss154", 0, "concurency-stamp-1-112dsd-fsdsffsf-1444", "Juzba88@gmail.com", true, false, null, "JUZBA88@GMAIL.COM", "JUZBA88@GMAIL.COM", "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==", null, false, "security-stamp-1-14fds-fsd14dsf-dsfsdf5", false, "Juzba88@gmail.com" },
+                    { "karel3-id-4242422fdsss145", 0, "concurency-stamp-3-11kjkj-fsdsffsf-17855", "Karel@gmail.com", true, false, null, "KAREL@GMAIL.COM", "KAREL@GMAIL.COM", "AQAAAAIAAYagAAAAEKEAkQQa9R8U6qeYMzJ+wta1OH8ucPabTfW1aJSWYnQo/b/nWsQlVLQDVESflgvbJw==", null, false, "security-stamp-3-14fds-kjkhkdsf-dsfsd545", false, "Karel@gmail.com" },
+                    { "katka2-id-12112122fdsss178", 0, "concurency-stamp-2-112dsd-fssfdnmjsf-5866", "Katka@gmail.com", true, false, null, "KATKA@GMAIL.COM", "KATKA@GMAIL.COM", "AQAAAAIAAYagAAAAEMpUq/G6FCHFYqBZnihzdsiHRhqrKsi6XzZQrOuBPZTKKCRYtiSzTxKxMPQe/GFbAg==", null, false, "security-stamp-2-14fds-fsd14dsf-242424242", false, "Katka@gmail.com" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "admin-role-id", "user1-id-2478652fdsss154" });
+                values: new object[,]
+                {
+                    { "admin-role-id", "juzba1-id-2478652fdsss154" },
+                    { "employer-role-id", "katka2-id-12112122fdsss178" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_AplicantId",

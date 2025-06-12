@@ -1,6 +1,5 @@
 using JobPortal.Data;
 using JobPortal.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +18,10 @@ namespace JobPortal.Controllers
 
         public async Task<IActionResult> JobList() => View(await _db.Jobs.ToListAsync());
 
-      
+
         public IActionResult Buttons() => View();
 
-       
+
         [HttpPost]
         public async Task<IActionResult> Buttons(int number)
         {
@@ -31,14 +30,15 @@ namespace JobPortal.Controllers
             {
                 var user = new IdentityUser
                 {
-                    Id = "user1-id-2478652fdsss154",
-                    UserName = "Juzba88@gmail.com",
-                    NormalizedUserName = "JUZBA88@GMAIL.COM",
-                    Email = "Juzba88@gmail.com",
-                    NormalizedEmail = "JUZBA88@GMAIL.COM",
+                    Id = "user3-id-4242422fdsss145",
+                    UserName = "Karel@gmail.com",
+                    NormalizedUserName = "KAREL@GMAIL.COM",
+                    Email = "Karel@gmail.com",
+                    NormalizedEmail = "KAREL@GMAIL.COM",
                     EmailConfirmed = true,
-                    SecurityStamp = "security-stamp-1-14fds-fsd14dsf-dsfsdf5",
-                    ConcurrencyStamp = "concurency-stamp-1-112dsd-fsdsffsf-1444",
+                    SecurityStamp = "security-stamp-3-14fds-kjkhkdsf-dsfsd545",
+                    PasswordHash = "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==",
+                    ConcurrencyStamp = "concurency-stamp-3-11kjkj-fsdsffsf-17855",
                 };
 
                 var hasher = new PasswordHasher<IdentityUser>();
