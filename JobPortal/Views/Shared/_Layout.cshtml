@@ -24,7 +24,7 @@
                         @if (User.IsInRole("Admin") || User.IsInRole("Employer"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Employer" asp-controller="Home" asp-action="AddJob">Přidat</a>
+                                <a class="nav-link text-white" asp-area="Employer" asp-controller="Home" asp-action="EmployerPage">Zaměstnavatel</a>
                             </li>
                         } 
                         @if (User.IsInRole("Admin"))

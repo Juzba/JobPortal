@@ -4,12 +4,12 @@
     ViewData["Title"] = "AddJob";
 }
 
-<h1>Přidat inzerát</h1>
+<h1>@(Model.Id == 0 ? "Přidat inzerát" : $"Editovat inzerát ID: {Model.Id}")</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddJob">
+        <form asp-antiforgery=true asp-action="AddJob">
             <div asp-validation-summary="All" class="text-danger"></div>
             
                 <input type="hidden" asp-for="EmployerId" class ="form-control">
@@ -34,8 +34,8 @@
                 <input asp-for="Salary" class="form-control" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Vytvořit" class="btn btn-info my-4" />
-                <a class="btn btn-outline-info ms-2" asp-controller="Home" asp-action="JobList">Back to List</a>
+                <input type="submit" value="@(Model.Id == 0 ? "Vytvořit" : "Editovat")" class="btn btn-info my-4" />
+                <a class="btn btn-outline-info ms-2" asp-controller="Home" asp-action="EmployerPage">Back to List</a>
             </div>
         </form>
     </div>
