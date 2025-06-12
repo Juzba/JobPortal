@@ -44,9 +44,9 @@
         <tr>
             @if (User.IsInRole("Admin"))
             {
-                <td>
-                    @Html.DisplayFor(model => item.Employer.UserName)
-                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employer.UserName)
+                    </td>
             }
             <td>
                 @Html.DisplayFor(modelItem => item.Title)

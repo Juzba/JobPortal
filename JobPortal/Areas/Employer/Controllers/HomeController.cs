@@ -23,7 +23,7 @@ namespace JobPortal.Areas.Employer.Controllers
         public async Task<IActionResult> EmployerPage()
         {
             if (User.Identity == null) return View(new List<Job>());
-            if (User.IsInRole("Admin")) return View(await _db.Jobs.ToListAsync());
+            if (User.IsInRole("Admin")) return View(await _db.Jobs.Include(p => p.Employer).ToListAsync());
             return View(await _db.Jobs.Where(p => p.Employer.UserName == User.Identity.Name).ToListAsync());
         }
 
@@ -41,16 +41,20 @@ namespace JobPortal.Areas.Employer.Controllers
         [HttpPost]
         public async Task<IActionResult> AddJob(Job job)
         {
+            IdentityUser? user;
 
-            if (User.Identity?.Name == null) return View(job);
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (job.EmployerId == null)
+                user = await _userManager.FindByNameAsync(User.Identity!.Name!);
+            else
+                user = await _userManager.FindByIdAsync(job.EmployerId);
+
+
             if (user != null)
             {
                 job.Employer = user;
                 job.DatePosted = DateTime.Now;
                 ModelState.Clear();
             }
-
 
 
             if (!ModelState.IsValid) return View(job);
