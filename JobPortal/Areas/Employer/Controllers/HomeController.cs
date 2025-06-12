@@ -39,7 +39,7 @@ namespace JobPortal.Areas.Employer.Controllers
             await _db.AddAsync(job);
             await _db.SaveChangesAsync();
 
-            return RedirectToAction("JobList", "Home");
+            return RedirectToAction("JobList", "Home", new {area = ""});
         }
     }
 

@@ -1,12 +1,45 @@
 ﻿@{
 	ViewData["Title"] = "Admin";
 }
+@model List<JobPortal.Models.UserModel>
 
 <div>
-	<h1>Vítej Admine.</h1>
+	<h1 class="my-4">Vítej Admine.</h1>
 
 
+	<table class="table table-dark table-bordered">
+		<thead>
+			<tr>
+				<td>User Name</td>
+				<td>Email</td>
+				<td>Email Confirmed</td>
+				<td>PhoneNumber</td>
+				<td>Role</td>
+				<td>Ban</td>
+				<td>Ban ends</td>
+			</tr>
+		</thead>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td>@user.UserName</td>
+				<td>@user.Email</td>
+				<td>@user.IsEmailConfirmed</td>
+				<td>@user.PhoneNumber</td>
+				<td>
+					@using (Html.BeginForm("AdminPage", "Home", FormMethod.Post))
+					{
+						<button class="btn @(user.Roles?.Contains("Admin") == true ? "btn-danger" : "btn-outline-light")" value="1">Admin</button>
+						<button class="btn @(user.Roles?.Contains("Employer") == true ? "btn-danger" : "btn-outline-light") " value="2">Employer</button>
+					}
+				</td>
+				<td>@user.Ban</td>
+				<td>@user.BanEnds</td>
+			</tr>
+		}
+</table>
 
+	<a class="btn btn-outline-info my-2" asp-area="" asp-controller="Home" asp-action="JobList">Back to List</a>
 
 
 
