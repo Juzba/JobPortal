@@ -10,6 +10,11 @@ namespace JobPortal.Models
         public string EmployerId { get; set; } = string.Empty;
         public IdentityUser Employer { get; set; } = default!;
 
+        
+        public IList<Message> Messages { get; set; } = [];
+
+
+
         [Required(ErrorMessage = "Zadej název.")]
         [StringLength(40, ErrorMessage ="Maximálně 40 znaků.")]
         public string Title { get; set; } = string.Empty;

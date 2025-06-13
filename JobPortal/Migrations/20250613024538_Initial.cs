@@ -184,31 +184,30 @@ namespace JobPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Applications",
+                name: "Messages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    JobId = table.Column<int>(type: "int", nullable: false),
-                    ApplicantId = table.Column<int>(type: "int", nullable: false),
-                    AplicantId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CVPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobId = table.Column<int>(type: "int", nullable: true),
+                    JobSeekerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Applications", x => x.Id);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Applications_AspNetUsers_AplicantId",
-                        column: x => x.AplicantId,
+                        name: "FK_Messages_AspNetUsers_JobSeekerId",
+                        column: x => x.JobSeekerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Applications_Jobs_JobId",
-                        column: x => x.JobId,
-                        principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Messages_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -239,16 +238,6 @@ namespace JobPortal.Migrations
                     { "admin-role-id", "juzba1-id-2478652fdsss154" },
                     { "employer-role-id", "katka2-id-12112122fdsss178" }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applications_AplicantId",
-                table: "Applications",
-                column: "AplicantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applications_JobId",
-                table: "Applications",
-                column: "JobId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -293,14 +282,21 @@ namespace JobPortal.Migrations
                 name: "IX_Jobs_EmployerId",
                 table: "Jobs",
                 column: "EmployerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_JobId",
+                table: "Messages",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_JobSeekerId",
+                table: "Messages",
+                column: "JobSeekerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Applications");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -317,10 +313,13 @@ namespace JobPortal.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Jobs");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -22,38 +22,6 @@ namespace JobPortal.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("JobPortal.Models.Applications", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AplicantId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ApplicantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CVPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AplicantId");
-
-                    b.HasIndex("JobId");
-
-                    b.ToTable("Applications");
-                });
-
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
                     b.Property<int>("Id")
@@ -97,6 +65,37 @@ namespace JobPortal.Migrations
                     b.HasIndex("EmployerId");
 
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("JobSeekerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("JobSeekerId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -379,23 +378,6 @@ namespace JobPortal.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("JobPortal.Models.Applications", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Aplicant")
-                        .WithMany()
-                        .HasForeignKey("AplicantId");
-
-                    b.HasOne("JobPortal.Models.Job", "Job")
-                        .WithMany()
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Aplicant");
-
-                    b.Navigation("Job");
-                });
-
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Employer")
@@ -405,6 +387,23 @@ namespace JobPortal.Migrations
                         .IsRequired();
 
                     b.Navigation("Employer");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Message", b =>
+                {
+                    b.HasOne("JobPortal.Models.Job", "Job")
+                        .WithMany("Messages")
+                        .HasForeignKey("JobId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "JobSeeker")
+                        .WithMany()
+                        .HasForeignKey("JobSeekerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("JobSeeker");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -456,6 +455,11 @@ namespace JobPortal.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Job", b =>
+                {
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

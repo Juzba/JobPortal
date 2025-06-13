@@ -52,14 +52,10 @@
         @if(User.Identity?.IsAuthenticated == true)
         {
             <h2 class="mt-5" >Odpovědět na inzerát</h2>
+            <p class="text-danger my-3">@ViewBag.Error</p>
             <form asp-antiforgery="true" asp-controller="Home" asp-action="Detail" method="post">
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea name="text" maxlength="800" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <button class="btn btn-outline-warning" type="submit">Odeslat</button>
                 <a class="btn btn-outline-info ms-3" asp-action="JobList">Back to List</a>

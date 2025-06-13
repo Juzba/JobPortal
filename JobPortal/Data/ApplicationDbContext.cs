@@ -13,7 +13,7 @@ namespace JobPortal.Data
         }
 
         public DbSet<Job> Jobs { get; set; }
-        public DbSet<Applications> Applications { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

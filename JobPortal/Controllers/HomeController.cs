@@ -1,5 +1,6 @@
-using JobPortal.Data;
+﻿using JobPortal.Data;
 using JobPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,20 +8,64 @@ using System.Diagnostics;
 
 namespace JobPortal.Controllers
 {
-    public class HomeController(ILogger<HomeController> logger, ApplicationDbContext db, RoleManager<IdentityRole> roleManager) : Controller
+    public class HomeController(ILogger<HomeController> logger, ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
         private readonly ApplicationDbContext _db = db;
         private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
 
         public IActionResult Index() => View();
-        public async Task<IActionResult> Detail(int id) => View(await _db.Jobs.FindAsync(id));
 
         public async Task<IActionResult> JobList() => View(await _db.Jobs.ToListAsync());
 
 
-        public IActionResult Buttons() => View();
 
+
+
+
+        /////////// DETAILS //////////////////
+        
+        static Job? _DetailsJobModel;
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            _DetailsJobModel = await _db.Jobs.FindAsync(id);
+            return View(_DetailsJobModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Detail(string text, int id)
+        {
+            if (text == null)
+            {
+                ViewBag.Error = "Zpráva musí obsahovat nějaký text!";
+                return View(_DetailsJobModel);
+            }
+
+            var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
+
+            var message = new Message()
+            {
+                Text = text,
+                DateTime = DateTime.Now,
+                JobSeekerId = await _userManager.GetUserIdAsync(user),
+                Job = _DetailsJobModel
+            };
+
+            await _db.Messages.AddAsync(message);
+            await _db.SaveChangesAsync();
+
+            ViewBag.Error = "Zpráva Odeslána!!";
+            return View(_DetailsJobModel); ;
+        }
+
+
+
+        /////////// BUTTONS //////////////////
+
+        public IActionResult Buttons() => View();
 
         [HttpPost]
         public async Task<IActionResult> Buttons(int number)
@@ -58,22 +103,7 @@ namespace JobPortal.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /////////// ERROR //////////////////
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
