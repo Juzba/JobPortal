@@ -38,8 +38,8 @@ namespace JobPortal.Data
                 }
             );
 
-            builder.Entity<IdentityUser>().HasData(
-                new IdentityUser
+            builder.Entity<AppUser>().HasData(
+                new AppUser
                 {
                     Id = "juzba1-id-2478652fdsss154",
                     UserName = "Juzba88@gmail.com",
@@ -51,7 +51,7 @@ namespace JobPortal.Data
                     PasswordHash = "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==",
                     ConcurrencyStamp = "concurency-stamp-1-112dsd-fsdsffsf-1444",
                 },
-                 new IdentityUser
+                 new AppUser
                  {
                      Id = "katka2-id-12112122fdsss178",
                      UserName = "Katka@gmail.com",
@@ -63,7 +63,7 @@ namespace JobPortal.Data
                      PasswordHash = "AQAAAAIAAYagAAAAEMpUq/G6FCHFYqBZnihzdsiHRhqrKsi6XzZQrOuBPZTKKCRYtiSzTxKxMPQe/GFbAg==",
                      ConcurrencyStamp = "concurency-stamp-2-112dsd-fssfdnmjsf-5866",
                  },
-                 new IdentityUser
+                 new AppUser
                  {
                      Id = "karel3-id-4242422fdsss145",
                      UserName = "Karel@gmail.com",

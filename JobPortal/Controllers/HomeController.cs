@@ -60,47 +60,7 @@ namespace JobPortal.Controllers
             return View(_DetailsJobModel); ;
         }
 
-
-
-        /////////// BUTTONS //////////////////
-
-        public IActionResult Buttons() => View();
-
-        [HttpPost]
-        public async Task<IActionResult> Buttons(int number)
-        {
-            Console.WriteLine("Cislo je:" + number);
-            if (number == 1)
-            {
-                var user = new IdentityUser
-                {
-                    Id = "user3-id-4242422fdsss145",
-                    UserName = "Karel@gmail.com",
-                    NormalizedUserName = "KAREL@GMAIL.COM",
-                    Email = "Karel@gmail.com",
-                    NormalizedEmail = "KAREL@GMAIL.COM",
-                    EmailConfirmed = true,
-                    SecurityStamp = "security-stamp-3-14fds-kjkhkdsf-dsfsd545",
-                    PasswordHash = "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==",
-                    ConcurrencyStamp = "concurency-stamp-3-11kjkj-fsdsffsf-17855",
-                };
-
-                var hasher = new PasswordHasher<IdentityUser>();
-                user.PasswordHash = hasher.HashPassword(user, "123456");
-                Console.WriteLine(user.PasswordHash);
-            }
-
-            if (number == 2)
-            {
-                var adminRoleName = "admin";
-
-                await _roleManager.CreateAsync(new IdentityRole(adminRoleName));
-
-            }
-
-            return View();
-        }
-
+           
 
         /////////// ERROR //////////////////
 
