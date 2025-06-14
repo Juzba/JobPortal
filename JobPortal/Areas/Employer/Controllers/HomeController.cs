@@ -22,11 +22,17 @@ namespace JobPortal.Areas.Employer.Controllers
         ///////////// Employer Page ////////////////////////
         public async Task<IActionResult> EmployerPage()
         {
-            if (User.Identity == null) return View(new List<Job>());
-            if (User.IsInRole("Admin")) return View(await _db.Jobs.Include(p => p.Employer).ToListAsync());
-            return View(await _db.Jobs.Where(p => p.Employer.UserName == User.Identity.Name).ToListAsync());
+            if (User.IsInRole("Admin")) return View(await _db.Jobs.Include(p => p.Messages).Include(p => p.Employer).ToListAsync());
+            return View(await _db.Jobs.Include(p => p.Messages).Where(p => p.Employer.UserName == User.Identity!.Name).ToListAsync());
         }
 
+
+        ///////////// DETAILS ////////////////////////
+
+        public async Task<IActionResult> DetailsJob(int id)
+        {
+            return View(await _db.Jobs.Include(p => p.Messages).ThenInclude(p => p.User).FirstOrDefaultAsync(p => p.Id == id));
+        }
 
 
 

@@ -36,39 +36,46 @@
             <th>
                 @Html.DisplayNameFor(model => model[0].DatePosted)
             </th>
+            <th>
+                Odpovědi
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var job in Model) {
         <tr>
             @if (User.IsInRole("Admin"))
             {
                     <td>
-                        @Html.DisplayFor(modelItem => item.Employer.UserName)
+                        @Html.DisplayFor(modelItem => job.Employer.UserName)
                     </td>
             }
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => job.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Company)
+                @Html.DisplayFor(modelItem => job.Company)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => job.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Location)
+                @Html.DisplayFor(modelItem => job.Location)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Salary)
+                @Html.DisplayFor(modelItem => job.Salary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DatePosted)
+                @Html.DisplayFor(modelItem => job.DatePosted)
+            </td>
+            <td>
+                @job.Messages.Count()
             </td>
             <td class="d-flex justify-content-between">
-                <a class="btn btn-outline-info" style="width: 100px" asp-action="AddJob" asp-route-id="@item.Id">Edit</a> 
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-outline-info" style="width: 70px" asp-action="AddJob" asp-route-id="@job.Id">Edit</a> 
+                <a class="btn btn-outline-info" style="width: 70px; margin: 0 5px" asp-action="DetailsJob" asp-route-id="@job.Id">Detail</a> 
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@job.Id">Delete</a>
             </td>
         </tr>
 }

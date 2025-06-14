@@ -15,7 +15,7 @@ namespace JobPortal.Code
 
             return new Job()
             {
-                Title = titles[rnd.Next(0,titles.Length)],
+                Title = titles[rnd.Next(0, titles.Length)],
                 Company = company[rnd.Next(0, company.Length)],
                 Description = description[rnd.Next(0, description.Length)],
                 Location = location[rnd.Next(0, location.Length)],
@@ -24,7 +24,26 @@ namespace JobPortal.Code
         }
 
 
+        public string RandomReply()
+        {
+            Random rnd = new();
 
+            string[] text =
+                [
+                "Rád zvedám těžké věci, kromě nálady v pondělí ráno.",
+                "Miluji rozhodovat, hlavně o tom, kdy je pauza na kafe.",
+                "Miluji auta, řízení i nečekané objížďky – adrenalin každý den.",
+                "Vařím rychle, chutně a občas i bez požárního poplachu.",
+                "Jsem rychlý jako blesk, ale s úsměvem jako slunce.",
+                "Mop a já jsme nerozluční přátelé, i když někdy kloužu.",
+                "Kóduji, dokud neztratím chuť na kávu i světlo.",
+                "Uhelný mistr s plamenem v srdci, uhlí s láskou.",
+                "Ovládám nůžky, hřebeny i tajné účesy na jednu noc.",
+                "Miluji prodávat. Obzvlášť ty poslední sušenky v obchodě."
+                ];
+
+            return text[rnd.Next(10)];
+        }
 
 
 

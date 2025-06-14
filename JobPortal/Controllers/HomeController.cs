@@ -25,7 +25,7 @@ namespace JobPortal.Controllers
 
 
         /////////// DETAILS //////////////////
-        
+
         static Job? _DetailsJobModel;
 
         public async Task<IActionResult> Detail(int id)
@@ -46,21 +46,29 @@ namespace JobPortal.Controllers
 
             var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
 
-            var message = new Message()
+            if (user != null && _DetailsJobModel != null)
             {
-                Text = text,
-                DateTime = DateTime.Now,
-                UserId = await _userManager.GetUserIdAsync(user),
-            };
 
-            await _db.Messages.AddAsync(message);
-            await _db.SaveChangesAsync();
+                var message = new Message()
+                {
+                    Text = text,
+                    DateTime = DateTime.Now,
+                    UserId = await _userManager.GetUserIdAsync(user),
+                    JobId = _DetailsJobModel.Id
+                };
 
-            ViewBag.Error = "Zpráva Odeslána!!";
-            return View(_DetailsJobModel); ;
+                await _db.Messages.AddAsync(message);
+                await _db.SaveChangesAsync();
+
+                ViewBag.Success = "Zpráva Odeslána!!";
+                ViewBag.Error = null;
+                return View(_DetailsJobModel); ;
+            }
+            ViewBag.Error = "Chyba uživatele!";
+            return View(_DetailsJobModel);
         }
 
-           
+
 
         /////////// ERROR //////////////////
 

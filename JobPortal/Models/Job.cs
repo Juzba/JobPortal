@@ -29,9 +29,9 @@ namespace JobPortal.Models
         public string Location { get; set; } = string.Empty;
         [Required(ErrorMessage = "Zadej mzdu.")]
         [Range(5000, 500000, ErrorMessage = "V rozsahu 5000 - 500 000Kč")]
-        [DisplayFormat(DataFormatString = "{0:C}")]
+        [DisplayFormat(DataFormatString = "{0:C0}")]
         public int Salary { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yy}")]
         public DateTime DatePosted { get; set; }
     }
 }

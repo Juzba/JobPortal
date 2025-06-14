@@ -1,4 +1,5 @@
 ﻿@model JobPortal.Models.Job
+@inject JobPortal.Code.Components _components;
 
 @{
     ViewData["Title"] = "Detail";
@@ -52,10 +53,10 @@
         @if(User.Identity?.IsAuthenticated == true)
         {
             <h2 class="mt-5" >Odpovědět na inzerát</h2>
-            <p class="text-danger my-3">@ViewBag.Error</p>
+            <p class="@(ViewBag.Error == null ? "text-success" : "text-danger") my-3">@(ViewBag.Error ?? ViewBag.Success)</p>
             <form asp-antiforgery="true" asp-controller="Home" asp-action="Detail" method="post">
                 <div class="mb-3">
-                    <textarea name="text" maxlength="800" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea name="text" maxlength="800" class="form-control" id="exampleFormControlTextarea1" rows="3">@_components.RandomReply()</textarea>
                 </div>
                 <button class="btn btn-outline-warning" type="submit">Odeslat</button>
                 <a class="btn btn-outline-info ms-3" asp-action="JobList">Back to List</a>
