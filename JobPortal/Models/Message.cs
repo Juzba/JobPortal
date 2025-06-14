@@ -8,11 +8,16 @@ namespace JobPortal.Models
         public string Text { get; set; } = string.Empty;
         public DateTime DateTime { get; set; }
 
-        public Job? Job { get; set; }
 
-        public string JobSeekerId { get; set; } = string.Empty;
-        public IdentityUser? JobSeeker { get; set; }
 
+
+        public int JobId { get; set; }
+        public Job Job { get; set; } = default!;
+
+
+
+        public string UserId { get; set; } = string.Empty;
+        public AppUser User { get; set; } = default!;
 
 
     }

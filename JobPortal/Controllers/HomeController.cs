@@ -8,12 +8,12 @@ using System.Diagnostics;
 
 namespace JobPortal.Controllers
 {
-    public class HomeController(ILogger<HomeController> logger, ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager) : Controller
+    public class HomeController(ILogger<HomeController> logger, ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
         private readonly ApplicationDbContext _db = db;
         private readonly RoleManager<IdentityRole> _roleManager = roleManager;
-        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly UserManager<AppUser> _userManager = userManager;
 
         public IActionResult Index() => View();
 
@@ -50,8 +50,7 @@ namespace JobPortal.Controllers
             {
                 Text = text,
                 DateTime = DateTime.Now,
-                JobSeekerId = await _userManager.GetUserIdAsync(user),
-                Job = _DetailsJobModel
+                UserId = await _userManager.GetUserIdAsync(user),
             };
 
             await _db.Messages.AddAsync(message);

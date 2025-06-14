@@ -11,11 +11,11 @@ namespace JobPortal.Areas.Employer.Controllers
     [Area("Employer")]
     [Authorize(Roles = "Employer, Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class HomeController(ApplicationDbContext db, UserManager<IdentityUser> userManager, Components components) : Controller
+    public class HomeController(ApplicationDbContext db, UserManager<AppUser> userManager, Components components) : Controller
     {
 
         private readonly ApplicationDbContext _db = db;
-        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly UserManager<AppUser> _userManager = userManager;
         private readonly Components _components = components;
 
 
@@ -41,7 +41,7 @@ namespace JobPortal.Areas.Employer.Controllers
         [HttpPost]
         public async Task<IActionResult> AddJob(Job job)
         {
-            IdentityUser? user;
+            AppUser? user;
 
             if (job.EmployerId == null)
                 user = await _userManager.FindByNameAsync(User.Identity!.Name!);

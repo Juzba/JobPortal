@@ -78,22 +78,22 @@ namespace JobPortal.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("JobId")
+                    b.Property<int>("JobId")
                         .HasColumnType("int");
-
-                    b.Property<string>("JobSeekerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("JobId");
 
-                    b.HasIndex("JobSeekerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Messages");
                 });
@@ -182,6 +182,11 @@ namespace JobPortal.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -233,6 +238,10 @@ namespace JobPortal.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
 
                     b.HasData(
                         new
@@ -378,10 +387,17 @@ namespace JobPortal.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("JobPortal.Models.AppUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("AppUser");
+                });
+
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Employer")
-                        .WithMany()
+                    b.HasOne("JobPortal.Models.AppUser", "Employer")
+                        .WithMany("CreatedJobs")
                         .HasForeignKey("EmployerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -393,17 +409,19 @@ namespace JobPortal.Migrations
                 {
                     b.HasOne("JobPortal.Models.Job", "Job")
                         .WithMany("Messages")
-                        .HasForeignKey("JobId");
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "JobSeeker")
-                        .WithMany()
-                        .HasForeignKey("JobSeekerId")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.AppUser", "User")
+                        .WithMany("MessagesSent")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Job");
 
-                    b.Navigation("JobSeeker");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -460,6 +478,13 @@ namespace JobPortal.Migrations
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
                     b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.AppUser", b =>
+                {
+                    b.Navigation("CreatedJobs");
+
+                    b.Navigation("MessagesSent");
                 });
 #pragma warning restore 612, 618
         }

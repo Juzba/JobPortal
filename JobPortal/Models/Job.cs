@@ -8,10 +8,10 @@ namespace JobPortal.Models
         public int Id { get; set; }
 
         public string EmployerId { get; set; } = string.Empty;
-        public IdentityUser Employer { get; set; } = default!;
+        public AppUser Employer { get; set; } = default!;
 
-        
-        public IList<Message> Messages { get; set; } = [];
+
+        public ICollection<Message> Messages { get; set; } = [];
 
 
 

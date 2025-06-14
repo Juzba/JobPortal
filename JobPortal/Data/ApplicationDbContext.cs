@@ -91,9 +91,19 @@ namespace JobPortal.Data
                 .Property(j => j.Salary)
                 .HasColumnType("decimal(18, 2)");
 
+            builder.Entity<Message>()
+                .HasOne(m => m.Job)
+                .WithMany(j => j.Messages)
+                .HasForeignKey(m => m.JobId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Message>()
+                .HasOne(m => m.User)
+                .WithMany(u => u.MessagesSent)
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
-
         }
-
     }
 }

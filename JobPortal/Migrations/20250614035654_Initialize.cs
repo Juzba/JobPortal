@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JobPortal.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Initialize : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,6 +32,7 @@ namespace JobPortal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -191,23 +192,24 @@ namespace JobPortal.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    JobId = table.Column<int>(type: "int", nullable: true),
-                    JobSeekerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    JobId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_JobSeekerId",
-                        column: x => x.JobSeekerId,
+                        name: "FK_Messages_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Messages_Jobs_JobId",
                         column: x => x.JobId,
                         principalTable: "Jobs",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -222,12 +224,12 @@ namespace JobPortal.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "juzba1-id-2478652fdsss154", 0, "concurency-stamp-1-112dsd-fsdsffsf-1444", "Juzba88@gmail.com", true, false, null, "JUZBA88@GMAIL.COM", "JUZBA88@GMAIL.COM", "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==", null, false, "security-stamp-1-14fds-fsd14dsf-dsfsdf5", false, "Juzba88@gmail.com" },
-                    { "karel3-id-4242422fdsss145", 0, "concurency-stamp-3-11kjkj-fsdsffsf-17855", "Karel@gmail.com", true, false, null, "KAREL@GMAIL.COM", "KAREL@GMAIL.COM", "AQAAAAIAAYagAAAAEKEAkQQa9R8U6qeYMzJ+wta1OH8ucPabTfW1aJSWYnQo/b/nWsQlVLQDVESflgvbJw==", null, false, "security-stamp-3-14fds-kjkhkdsf-dsfsd545", false, "Karel@gmail.com" },
-                    { "katka2-id-12112122fdsss178", 0, "concurency-stamp-2-112dsd-fssfdnmjsf-5866", "Katka@gmail.com", true, false, null, "KATKA@GMAIL.COM", "KATKA@GMAIL.COM", "AQAAAAIAAYagAAAAEMpUq/G6FCHFYqBZnihzdsiHRhqrKsi6XzZQrOuBPZTKKCRYtiSzTxKxMPQe/GFbAg==", null, false, "security-stamp-2-14fds-fsd14dsf-242424242", false, "Katka@gmail.com" }
+                    { "juzba1-id-2478652fdsss154", 0, "concurency-stamp-1-112dsd-fsdsffsf-1444", "IdentityUser", "Juzba88@gmail.com", true, false, null, "JUZBA88@GMAIL.COM", "JUZBA88@GMAIL.COM", "AQAAAAIAAYagAAAAEEH+X9L8IqMjAnas5R0lqrQnPScyf9lFnoVLZWO8Z6oXKDK72CXgyAiKCjd3drW26Q==", null, false, "security-stamp-1-14fds-fsd14dsf-dsfsdf5", false, "Juzba88@gmail.com" },
+                    { "karel3-id-4242422fdsss145", 0, "concurency-stamp-3-11kjkj-fsdsffsf-17855", "IdentityUser", "Karel@gmail.com", true, false, null, "KAREL@GMAIL.COM", "KAREL@GMAIL.COM", "AQAAAAIAAYagAAAAEKEAkQQa9R8U6qeYMzJ+wta1OH8ucPabTfW1aJSWYnQo/b/nWsQlVLQDVESflgvbJw==", null, false, "security-stamp-3-14fds-kjkhkdsf-dsfsd545", false, "Karel@gmail.com" },
+                    { "katka2-id-12112122fdsss178", 0, "concurency-stamp-2-112dsd-fssfdnmjsf-5866", "IdentityUser", "Katka@gmail.com", true, false, null, "KATKA@GMAIL.COM", "KATKA@GMAIL.COM", "AQAAAAIAAYagAAAAEMpUq/G6FCHFYqBZnihzdsiHRhqrKsi6XzZQrOuBPZTKKCRYtiSzTxKxMPQe/GFbAg==", null, false, "security-stamp-2-14fds-fsd14dsf-242424242", false, "Katka@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -289,9 +291,9 @@ namespace JobPortal.Migrations
                 column: "JobId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_JobSeekerId",
+                name: "IX_Messages_UserId",
                 table: "Messages",
-                column: "JobSeekerId");
+                column: "UserId");
         }
 
         /// <inheritdoc />

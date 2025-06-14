@@ -10,10 +10,10 @@ namespace JobPortal.Areas.Admin.Controllers
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     [Route("[area]/[controller]/{id?}")]
-    public class HomeController(ApplicationDbContext db, UserManager<IdentityUser> userManager) : Controller
+    public class HomeController(ApplicationDbContext db, UserManager<AppUser> userManager) : Controller
     {
         private readonly ApplicationDbContext _db = db;
-        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly UserManager<AppUser> _userManager = userManager;
         static List<UserModel> userList = [];
 
         public async Task<IActionResult> AdminPage()
