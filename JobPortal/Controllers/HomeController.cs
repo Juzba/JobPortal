@@ -17,36 +17,53 @@ namespace JobPortal.Controllers
 
         public IActionResult Index() => View();
 
-        public async Task<IActionResult> JobList() => View(await _db.Jobs.ToListAsync());
+
+        /////////// JOBLIST //////////////////
+        public async Task<IActionResult> JobList(FilterModel filterModel)
+        {
+            Console.WriteLine(filterModel.MaxSalary);
+
+            var jobs = await _db.Jobs
+                .Where(p => p.Location.Contains(filterModel.Location ?? ""))
+                .Where(p => p.Title.Contains(filterModel.JobPosition ?? ""))
+                .Where(p => p.Salary >= filterModel.MinSalary && p.Salary <= filterModel.MaxSalary)
+                .Skip(0)
+                .Take(2)
+                .ToListAsync();
+
+            return View(jobs);
+        }
 
 
+
+        /////////// SEARCH FILTER //////////////////
+        public IActionResult SearchFilter() => View(new FilterModel());
+        [HttpPost]
+        public IActionResult SearchFilter(FilterModel filterModel)
+        {
+            if (filterModel.MinSalary >= filterModel.MaxSalary) ModelState.AddModelError("", "Spodní hranice mzdy musí být menší než horní hranice.");
+            if (!ModelState.IsValid) return View(filterModel);
+
+
+
+            return RedirectToAction("JobList", "Home", filterModel);
+        }
 
 
 
 
         /////////// DETAILS //////////////////
 
-        static Job? _DetailsJobModel;
+        public async Task<IActionResult> Detail(int id) => View(await _db.Jobs.FindAsync(id));
 
-        public async Task<IActionResult> Detail(int id)
-        {
-            _DetailsJobModel = await _db.Jobs.FindAsync(id);
-            return View(_DetailsJobModel);
-        }
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Detail(string text, int id)
         {
-            if (text == null)
-            {
-                ViewBag.Error = "Zpráva musí obsahovat nějaký text!";
-                return View(_DetailsJobModel);
-            }
-
             var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
 
-            if (user != null && _DetailsJobModel != null)
+            if (user != null && text != null)
             {
 
                 var message = new Message()
@@ -54,18 +71,17 @@ namespace JobPortal.Controllers
                     Text = text,
                     DateTime = DateTime.Now,
                     UserId = await _userManager.GetUserIdAsync(user),
-                    JobId = _DetailsJobModel.Id
+                    JobId = id
                 };
 
                 await _db.Messages.AddAsync(message);
                 await _db.SaveChangesAsync();
 
-                ViewBag.Success = "Zpráva Odeslána!!";
-                ViewBag.Error = null;
-                return View(_DetailsJobModel); ;
+                TempData["info"] = "Zpráva Odeslána!!";
+                return RedirectToAction("Detail");
             }
-            ViewBag.Error = "Chyba uživatele!";
-            return View(_DetailsJobModel);
+            TempData["info"] = text == null ? "Zpráva musí obsahovat nějaký text!" : "Uživatel nenalezen!";
+            return RedirectToAction("Detail");
         }
 
 

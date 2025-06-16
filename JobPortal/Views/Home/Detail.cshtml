@@ -53,7 +53,7 @@
         @if(User.Identity?.IsAuthenticated == true)
         {
             <h2 class="mt-5" >Odpovědět na inzerát</h2>
-            <p class="@(ViewBag.Error == null ? "text-success" : "text-danger") my-3">@(ViewBag.Error ?? ViewBag.Success)</p>
+            <p class="@(TempData.Peek("info")?.ToString()?.Contains("Odeslána") == true ? "text-success" : "text-danger") my-3">@(TempData["info"]?.ToString())</p>
             <form asp-antiforgery="true" asp-controller="Home" asp-action="Detail" method="post">
                 <div class="mb-3">
                     <textarea name="text" maxlength="800" class="form-control" id="exampleFormControlTextarea1" rows="3">@_components.RandomReply()</textarea>

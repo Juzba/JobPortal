@@ -8,6 +8,7 @@
 <div>
 
     <h1 class="my-4 text-warning text-center fw-bolder">JobList</h1>
+    <a class="btn btn-warning my-3" asp-controller="Home" asp-action="SearchFilter">Filtrovat vyhledávání.</a>
 
     <table style="max-width: 800px" class="table table-dark table-bordered mx-auto">
             @foreach (var item in Model)
@@ -34,29 +35,5 @@
                 </tr>
              }
     </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </div>

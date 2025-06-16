@@ -13,6 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddTransient<Components>();
+//builder.Services.AddMemoryCache();
+//builder.Services.AddSession();
 
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
@@ -66,6 +68,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+//app.UseSession();
 
 app.UseAuthorization();
 

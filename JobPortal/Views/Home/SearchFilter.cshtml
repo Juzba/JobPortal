@@ -1,0 +1,31 @@
+﻿@{
+	ViewData["Title"] = "Search filter.";
+}
+
+@model FilterModel
+
+
+<div style="max-width: 700px; margin: auto">
+	<h1 class="text-center text-warning m-4">Zadej parametry vyhledávání.</h1>
+
+	<form asp-antiforgery=true asp-controller="Home" asp-action="SearchFilter" method="post"			>
+		<div class="text-danger" asp-validation-summary="All"></div>
+
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" asp-for="@Model.Location" placeholder="Lokalita">
+			<label asp-for="@Model.Location">Lokalita</label>
+		</div>
+		<div class="form-floating">
+			<input type="text" class="form-control" asp-for="@Model.JobPosition" placeholder="Pracovní pozice">
+			<label asp-for="@Model.JobPosition">Pracovní pozice</label>
+		</div>
+
+		<div class="input-group my-3">
+			<span class="input-group-text">Zadej rozpěti mzdy.</span>
+			<input asp-for="@Model.MinSalary" type="number" min="0" max="200000" class="form-control">
+			<input asp-for="@Model.MaxSalary" type="number" min="0" max="200000" class="form-control">
+		</div>
+	
+		<button class="btn btn-warning" type="submit">Filtrovat</button>
+	</form>
+</div>

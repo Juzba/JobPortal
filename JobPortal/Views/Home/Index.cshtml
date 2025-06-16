@@ -6,22 +6,25 @@
     <h1 class="mt-5  fs-1 text-warning fw-bolder">Job Portal</h1>
     <h2 class="mb-5 text-warning">Inzerce a vyhledávání pracovních nabídek</h2>
    <div>
-        <ol>
-            <li class="my-2">
-                Zaměstnavatelé mohou přidávat, upravovat a mazat pracovní nabídky.
-                Uchazeči se mohou registrovat, hledat nabídky a podávat žádosti.
-                Admin má plný přístup ke správě uživatelů a inzerátů.
-            </li>
 
-            <li class="my-2">
-                Při registraci se uživatelům pošle ověřovací email.
-                Bez potvrzeného emailu není přístup k podávání žádostí nebo publikování nabídek.
-            </li>
+<ol>
+    <li>V systému existují tři základní role:
+        <ul>
+                <li> <b>Administrátor:</b> Má plný přístup ke správě uživatelů a pracovních inzerátů, může upravovat nebo mazat jakékoliv nabídky i uživatele, dohlíží na chod celé aplikace.</li>
+                <li> <b>Zaměstnavatel:</b> Může přidávat nové pracovní nabídky, upravovat a mazat vlastní inzeráty, spravovat žádosti uchazečů na své pracovní pozice.</li>
+                <li> <b>Uchazeč o práci:</b> Může si zakládat profil, prohledávat pracovní nabídky, posílat žádosti na vybrané pozice a sledovat stav svých odpovědí.</li>
+                <li> <b>*Požadavek:</b> Při inicializaci databáze (seedování) musí být vždy vytvořeny tyto tři výchozí role – administrátor, zaměstnavatel a uchazeč o práci.</li>
+        </ul>
+    </li>
 
-            <li class="my-2">
-                Filtrování pracovních nabídek podle lokace, platových rozpětí, typu práce.
-                Profil uživatele s historií podaných žádostí nebo nabídek.
-            </li>
-        </ol>
+    <li class="my-2">
+        Filtrování pracovních nabídek podle lokace, platových rozpětí, typu práce.
+        Profil uživatele s historií podaných žádostí nebo nabídek.
+    </li>
+    <li class="my-2">
+        Každý uživatel má možnost vidět historii svých aktivit – zaměstnavatelé náhled na své inzeráty, uchazeči přehled všech podaných žádostí a jejich stav.
+    </li>
+       
+</ol>
    </div>
 </div>
