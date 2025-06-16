@@ -19,18 +19,26 @@ namespace JobPortal.Controllers
 
 
         /////////// JOBLIST //////////////////
-        public async Task<IActionResult> JobList(FilterModel filterModel)
+        public async Task<IActionResult> JobList(FilterModel filterModel, int id)
         {
-            Console.WriteLine(filterModel.MaxSalary);
+            int itemOnPageCount = 2;
+            int pageNumberCount = id * itemOnPageCount;
 
-            var jobs = await _db.Jobs
+            var filteredJobs = _db.Jobs
                 .Where(p => p.Location.Contains(filterModel.Location ?? ""))
                 .Where(p => p.Title.Contains(filterModel.JobPosition ?? ""))
-                .Where(p => p.Salary >= filterModel.MinSalary && p.Salary <= filterModel.MaxSalary)
-                .Skip(0)
-                .Take(2)
-                .ToListAsync();
+                .Where(p => p.Salary >= filterModel.MinSalary && p.Salary <= filterModel.MaxSalary);
 
+            var jobs = await filteredJobs
+             .Skip(pageNumberCount)
+             .Take(itemOnPageCount)
+             .ToListAsync();
+
+
+            int lastPage = filteredJobs.Count() % itemOnPageCount == 0 ? 0 : 1;
+            ViewBag.PagesCount = filteredJobs.Count() / itemOnPageCount + lastPage;
+
+            ViewBag.Count = filteredJobs.Count();
             return View(jobs);
         }
 

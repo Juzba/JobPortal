@@ -9,6 +9,8 @@
 
     <h1 class="my-4 text-warning text-center fw-bolder">JobList</h1>
     <a class="btn btn-warning my-3" asp-controller="Home" asp-action="SearchFilter">Filtrovat vyhledávání.</a>
+    <p>Celkový počet Inzerátu: @ViewBag.Count</p>
+
 
     <table style="max-width: 800px" class="table table-dark table-bordered mx-auto">
             @foreach (var item in Model)
@@ -35,5 +37,11 @@
                 </tr>
              }
     </table>
+
+    @for (int i = 0; i < ViewBag.PagesCount; ++i)
+    {
+     <a class="btn btn-outline-info mx-1">@i</a>
+        
+    }
 
 </div>
