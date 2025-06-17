@@ -6,7 +6,7 @@ V systému existují tři základní role:
 
 1) Administrátor: Má plný přístup ke správě uživatelů a pracovních inzerátů, může upravovat nebo mazat jakékoliv nabídky i uživatele, dohlíží na chod celé aplikace.
 
-2)Zaměstnavatel: Může přidávat nové pracovní nabídky, upravovat a mazat vlastní inzeráty, spravovat žádosti uchazečů na své pracovní pozice.
+2) Zaměstnavatel: Může přidávat nové pracovní nabídky, upravovat a mazat vlastní inzeráty, spravovat žádosti uchazečů na své pracovní pozice.
 
 3) Uchazeč o práci: Může si zakládat profil, prohledávat pracovní nabídky, posílat žádosti na vybrané pozice a sledovat stav svých odpovědí.
    
