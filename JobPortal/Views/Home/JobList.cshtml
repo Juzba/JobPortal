@@ -38,10 +38,12 @@
              }
     </table>
 
-    @for (int i = 0; i < ViewBag.PagesCount; ++i)
-    {
-     <a class="btn btn-outline-info mx-1">@i</a>
-        
-    }
+
+    <form asp-controller="Home" asp-action="JobPage" method="post">
+        @for (int i = 0; i < ViewBag.PagesCount; ++i)
+        {
+         <button type="submit" name="page" value="@i" class="btn btn-outline-info mx-1">@i</button>
+        }
+    </form>
 
 </div>

@@ -4,6 +4,7 @@ namespace JobPortal.Models
 {
     public class FilterModel
     {
+        public int PageNumber { get; set; }
         public string? Location { get; set; }
         public string? JobPosition { get; set; }
 

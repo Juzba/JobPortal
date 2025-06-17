@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace JobPortal.Controllers
 {
@@ -19,10 +20,17 @@ namespace JobPortal.Controllers
 
 
         /////////// JOBLIST //////////////////
-        public async Task<IActionResult> JobList(FilterModel filterModel, int id)
+        public async Task<IActionResult> JobList(int id)
         {
-            int itemOnPageCount = 2;
-            int pageNumberCount = id * itemOnPageCount;
+            FilterModel filterModel = new();
+
+            if (id == 0)
+                filterModel = TempData.Peek("filter") is string dataJson ? JsonSerializer.Deserialize<FilterModel>(dataJson) ?? new() : new();
+
+
+
+            int itemsOnPageCount = 2;
+            int pagesCount = filterModel.PageNumber * itemsOnPageCount;
 
             var filteredJobs = _db.Jobs
                 .Where(p => p.Location.Contains(filterModel.Location ?? ""))
@@ -30,16 +38,28 @@ namespace JobPortal.Controllers
                 .Where(p => p.Salary >= filterModel.MinSalary && p.Salary <= filterModel.MaxSalary);
 
             var jobs = await filteredJobs
-             .Skip(pageNumberCount)
-             .Take(itemOnPageCount)
+             .Skip(pagesCount)
+             .Take(itemsOnPageCount)
              .ToListAsync();
 
 
-            int lastPage = filteredJobs.Count() % itemOnPageCount == 0 ? 0 : 1;
-            ViewBag.PagesCount = filteredJobs.Count() / itemOnPageCount + lastPage;
+
+            int lastPage = filteredJobs.Count() % itemsOnPageCount == 0 ? 0 : 1;
+            ViewBag.PagesCount = filteredJobs.Count() / itemsOnPageCount + lastPage;
 
             ViewBag.Count = filteredJobs.Count();
             return View(jobs);
+        }
+
+        [HttpPost]
+        public IActionResult JobPage(int page)
+        {
+            FilterModel data = TempData["filter"] is string jsonData ? JsonSerializer.Deserialize<FilterModel>(jsonData) ?? new() : new();
+            data.PageNumber = page;
+            TempData["filter"] = JsonSerializer.Serialize(data);
+
+
+            return RedirectToAction("JobList", "Home");
         }
 
 
@@ -53,8 +73,8 @@ namespace JobPortal.Controllers
             if (!ModelState.IsValid) return View(filterModel);
 
 
-
-            return RedirectToAction("JobList", "Home", filterModel);
+            TempData["filter"] = JsonSerializer.Serialize(filterModel);
+            return RedirectToAction("JobList", "Home");
         }
 
 
