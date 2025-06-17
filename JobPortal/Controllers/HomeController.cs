@@ -29,7 +29,7 @@ namespace JobPortal.Controllers
 
 
 
-            int itemsOnPageCount = 2;
+            int itemsOnPageCount = 6;
             int pagesCount = filterModel.PageNumber * itemsOnPageCount;
 
             var filteredJobs = _db.Jobs
@@ -47,6 +47,7 @@ namespace JobPortal.Controllers
             int lastPage = filteredJobs.Count() % itemsOnPageCount == 0 ? 0 : 1;
             ViewBag.PagesCount = filteredJobs.Count() / itemsOnPageCount + lastPage;
 
+            ViewBag.PageNumber = filterModel.PageNumber;
             ViewBag.Count = filteredJobs.Count();
             return View(jobs);
         }

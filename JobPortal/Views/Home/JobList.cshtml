@@ -8,8 +8,10 @@
 <div>
 
     <h1 class="my-4 text-warning text-center fw-bolder">JobList</h1>
-    <a class="btn btn-warning my-3" asp-controller="Home" asp-action="SearchFilter">Filtrovat vyhledávání.</a>
-    <p>Celkový počet Inzerátu: @ViewBag.Count</p>
+    <div class="d-flex justify-content-center align-items-center">
+        <a class="btn btn-warning my-3" asp-controller="Home" asp-action="SearchFilter">Filtrovat vyhledávání.</a>
+        <p class="my-0 ms-3">Celkový počet Inzerátu: @ViewBag.Count</p>
+    </div>
 
 
     <table style="max-width: 800px" class="table table-dark table-bordered mx-auto">
@@ -39,10 +41,10 @@
     </table>
 
 
-    <form asp-controller="Home" asp-action="JobPage" method="post">
+    <form class="d-flex justify-content-center" asp-controller="Home" asp-action="JobPage" method="post">
         @for (int i = 0; i < ViewBag.PagesCount; ++i)
         {
-         <button type="submit" name="page" value="@i" class="btn btn-outline-info mx-1">@i</button>
+            <button type="submit" name="page" value="@i" class="btn @(ViewBag.PageNumber == i ? "btn-info" : "btn-outline-info") mx-1">@i</button>
         }
     </form>
 
