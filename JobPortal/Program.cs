@@ -13,9 +13,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddTransient<Components>();
-builder.Services.AddMemoryCache();
-builder.Services.AddSession();
-
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
@@ -28,27 +25,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
-
-//builder.Services.Configure<SecurityStampValidatorOptions>(options =>
-//{
-//    options.ValidationInterval = TimeSpan.FromSeconds(10);
-//});
-
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    options.SlidingExpiration = true;
-//    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-//});
-
-//builder.Services.AddAuthorizationBuilder()
-//    .AddPolicy("JobSeekerPolicy", p => p.RequireRole("JobSeeker"))
-//    .AddPolicy("EmployerPolicy", p => p.RequireRole("Employer"))
-//    .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"));
-
-
-
-
-
 
 builder.Services.AddControllersWithViews();
 
@@ -68,8 +44,6 @@ else
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
-app.UseSession();
 
 app.UseAuthorization();
 
